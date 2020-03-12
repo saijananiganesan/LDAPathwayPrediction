@@ -140,8 +140,6 @@ class KEGG_data(object):
                         ec_file.write(mapid+','+j.strip().split('\t')[1]+'\n')
         ec_file.close()
 
-
-
     def get_ko_for_rxn_table(self):
         rxn_file=open(os.path.join(self.path+"rxn_pathways.csv"),'r+')
         ko_file=open(os.path.join(self.path+"ko_table.csv"),'w+')
@@ -159,9 +157,9 @@ class KEGG_data(object):
 
 
 if __name__=='__main__':
-    #KEGG_data().get_all_pathways()
-    #KEGG_data().get_all_organisms()
-    #KEGG_data().get_prokaryotes()
-    #KEGG_data().get_prok_path()
-    #KEGG_data().get_rxn_list_for_pathways()
+    KEGG_data().get_all_pathways()
+    KEGG_data().get_all_organisms()
+    KEGG_data().get_prokaryotes()
+    KEGG_data().get_prok_path()
+    KEGG_data().get_rxn_list_for_pathways()
     KEGG_data().get_ec_for_map_table()
