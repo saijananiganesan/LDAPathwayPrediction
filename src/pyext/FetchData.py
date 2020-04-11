@@ -6,7 +6,7 @@ from collections import Counter
 class KEGG_data(object):
     def __init__(self):
         self.url='http://rest.kegg.jp'
-        self.path='../data/'
+        self.path='../../data/'
 
     def get_response_from_url(self,url):
         response=requests.get(url)
