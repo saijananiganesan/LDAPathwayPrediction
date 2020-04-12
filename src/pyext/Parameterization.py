@@ -116,25 +116,25 @@ class Validation(Model.Model):
         Total_sol_enz_list=list(set(Total_sol_enz_list))
         return Total_sol_enz_list
 
-    def solution_for_one_random_doc(self,df):
-        random_pathway_index = np.random.randint(len(df))
-        bow = self.dictionary.doc2bow(df.iloc[random_pathway_index,2])
-        pathway=df.iloc[random_pathway_index,1]
-        true= list(set(df.iloc[random_pathway_index,2]))
+    def solution_for_one_random_doc(self,corpus):
+        random_pathway_index = np.random.randint(len(corpus))
+        bow = self.dictionary.doc2bow(corpus.iloc[random_pathway_index,2])
+        pathway=corpus.iloc[random_pathway_index,1]
+        true= list(set(corpus.iloc[random_pathway_index,2]))
         total_sol_enz_list=self.get_solution(bow)
         return tota_sol_enz_list,true
 
-    def evaluate_one_random_doc(self,df):
-        Total_sol_enz_list,true=solution_for_one_random_doc(df)
+    def evaluate_one_random_doc(self,corpus):
+        Total_sol_enz_list,true=solution_for_one_random_doc(corpus)
         input_tuple=self.compare_sol_true(Total_sol_enz_list,true)
         return input_tuple
 
-    def solution_for_one_df(self,df):
+    def solution_for_one_df(self,corpus):
         recall_list=[]; precision_list=[];accuracy_list=[];F1_list=[];specificity_list=[]
-        for index in range(0,len(df)):
-            bow = dictionary.doc2bow(df.iloc[index,2])
-            pathway=df.iloc[index,1]
-            true= list(set(df.iloc[index,2]))
+        for index in range(0,len(corpus)):
+            bow = dictionary.doc2bow(corpus.iloc[index,2])
+            pathway=corpus.iloc[index,1]
+            true= list(set(corpus.iloc[index,2]))
             total_sol_enz_list=self.get_solution(bow)
             input_tuple=self.compare_sol_true(Total_sol_enz_list,true)
             recall_list.append(self.get_recall(input_tuple))
@@ -177,48 +177,6 @@ class Validation(Model.Model):
             mean_specificity.append(np.mean(specificity_list))
         return (mean_recall,mean_precision,mean_acc,mean_f1,mean_specificity)
 
-    def jensen_shannon(self,query, matrix):
-        # lets keep with the p,q notation above
-        p = query[None,:].T # take transpose
-        q = matrix.T # transpose matrix
-        m = 0.5*(p + q)
-        return np.sqrt(0.5*(entropy(p,m) + entropy(q,m)))
-
-    def get_similarity(self,query,matrix):
-        sims = jensen_shannon(query,matrix) # list of jensen shannon distances
-        return sims # the top k positional index of the smallest Jensen Shannon distances
-
-    def topic_array_from_train_df(self,df,model):
-        train_pathway_dict={}
-        for i in range(0,len(df)):
-            bow = dictionary.doc2bow(df.iloc[i,2])
-            pathway=df.iloc[i,1]
-            doc_distribution=model.get_document_topics(bow=bow,minimum_probability= 0.00)
-            compare_doc=np.stack([np.array([tup[1] for tup in doc_distribution])])
-            train_pathway_dict[pathway]=compare_doc
-        return train_pathway_dict
-
-    def topic_array_for_test_df(self,df,model):
-        test_pathway_dict={}
-        for i in range(0,len(df)):
-            bow = dictionary.doc2bow(df.iloc[i,2])
-            pathway=df.iloc[i,1]
-            doc_distribution=model.get_document_topics(bow=bow,minimum_probability= 0.00)
-            test_doc=np.array([tup[1] for tup in doc_distribution])
-            test_pathway_dict[pathway]=test_doc
-        return test_pathway_dict
-
-    def compare_test_train_docs(self,df,model):
-        test_dict=self.topic_array_from_test_df(df,model)
-        train_dict=self.topic_array_for_train_df(df,model)
-        cols = ['Pathway_test', 'Pathway_train', 'JSD']
-        lst=[];
-        for pathway_test,test_doc in test_dict.items():
-            for pathway_train,train_doc in train_dict.items():
-                most_sim_ids = self.get_similarity(test_doc,train_doc)
-                lst.append([pathway_test,pathway_train,most_sim_ids[0]])
-        df=pd.DataFrame(lst,columns=cols)
-        return (df)
 
 
 if __name__=='__main__':
