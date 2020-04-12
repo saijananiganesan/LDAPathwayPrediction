@@ -1,0 +1,14 @@
+Python version  3 and above
+
+## Required Python modules
+pandas
+numpy
+flask
+collections
+pickle
+requests
+gensim
+fasttext
+matplotlib
+scipy
+sklearn
