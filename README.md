@@ -1,6 +1,6 @@
 # Improving enzymatic pathway prediction using latent Dirichlet allocation (LDA)
 
-![Metabolic pathways in prokaryotes](https://github.com/saijananiganesan/LDAPathwayPrediction/tree/master/images/pathways.png)
+![Metabolic pathways in prokaryotes](https://raw.githubusercontent.com/saijananiganesan/LDAPathwayPrediction/master/images/pathways.png)
 
 ## Project objective 
 
