@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from collections import Counter
 
-class KEGG_data(object):
+class KEGGData(object):
     def __init__(self):
         self.url='http://rest.kegg.jp'
         self.path='../../data/'
@@ -157,9 +157,9 @@ class KEGG_data(object):
 
 
 if __name__=='__main__':
-    KEGG_data().get_all_pathways()
-    KEGG_data().get_all_organisms()
-    KEGG_data().get_prokaryotes()
-    KEGG_data().get_prok_path()
-    KEGG_data().get_rxn_list_for_pathways()
-    KEGG_data().get_ec_for_map_table()
+    KEGGData().get_all_pathways()
+    KEGGData().get_all_organisms()
+    KEGGData().get_prokaryotes()
+    KEGGData().get_prok_path()
+    KEGGData().get_rxn_list_for_pathways()
+    KEGGData().get_ec_for_map_table()

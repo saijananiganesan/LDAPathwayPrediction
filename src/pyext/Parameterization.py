@@ -31,7 +31,6 @@ class Parameterization(Model.Model):
                                       id2word = dictionary, passes=passes)
         return ldamodel
 
-
     def gridsearch(self,alpha,eta,topics):
         if alpha is None:
             alpha=np.arange(0,0.5,0.1)
@@ -54,5 +53,5 @@ class Parameterization(Model.Model):
 
 
 if __name__=='__main__':
-    Parameterization()
-    print (Parameterization().df.head())
+    #Parameterization()
+    #print (Parameterization().df.head())

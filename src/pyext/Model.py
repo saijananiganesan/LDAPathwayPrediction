@@ -35,7 +35,7 @@ class Model(object):
             break
         EC_list_train=self.get_EC_list(train_crop)
         EC_list_test=self.get_EC_list(test_crop)
-        return EC_list_train,EC_list_test
+        return EC_list_train,EC_list_test,train_crop,test_crop
 
     def get_dict_corpus(self,train):
         dictionary = gensim.corpora.Dictionary(train)
