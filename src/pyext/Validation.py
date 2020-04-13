@@ -220,7 +220,24 @@ class Validation(Model.Model):
         df=pd.DataFrame(lst,columns=cols)
         return (df)
 
+    def print_heat_map_for_one(self,dist_df,test_df):
+        for i in range(0,len(test_df)):
+            df_sorted=dist_df.loc[dist_df['Pathway_test'] == test_df['Name'].to_list()[i]].sort_values(by=['JSD']).head()
+            Z=[df_sorted['JSD'].to_list()]
+            title=test_df['Name'].to_list()[i]
+            x_axis=df_sorted['Pathway_train'].to_list()
+            plt.figure(figsize=(12,2))
+            ax0=plt.subplot()
+            c = ax0.pcolor(Z,cmap='Blues', vmin=0, vmax=1,edgecolors='k', linewidths=1)
+            labels = [item.get_text() for item in ax0.get_xticklabels()]
+            labels = x_axis
+            ax0.set_xticklabels(labels,rotation=90,ha='right', minor=False)
+            ax0.set_title(title)
+            plt.colorbar(c, ax=ax0)
+            plt.show()
+            plt.tight_layout()
+            plt.savefig(self.path+'similarityheatmap',type='png');
+
 
 if __name__=='__main__':
     Validation()
-    print (Validation().corpus)
