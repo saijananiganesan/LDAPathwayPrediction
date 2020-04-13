@@ -22,6 +22,7 @@ class Validation(Model.Model):
         self.dictionary,self.corpus=Model.Model().get_dict_corpus(self.EC_train)
         self.model=gensim.models.ldamodel.LdaModel.load('models/lda_train_150topics_100passes.model')
         self.path='images/'
+        self.total_words=list(set([j for i in self.EC_train for j in i]))
 
     def plot_a_distribution(self,listtoplot,xlabel,xlim_tuple,ylabel,title):
         plt.figure(figsize=(8,5))
@@ -48,12 +49,11 @@ class Validation(Model.Model):
                                 ylabel='Density',title='Distance similarity between topics')
         return sim_list
 
-    def compare_2_lists(self,list_sol,list_true,total_words):
-        print (len(total_words))
+    def compare_2_lists(self,list_sol,list_true):
         TP=len([i for i in list_sol if i in list_true])
         FP=len([i for i in list_sol if i not in list_true])
         FN=len([i for i in list_true if i not in list_sol])
-        TN=len([i for i in [i for i in total_words if i not in list_true] 
+        TN=len([i for i in [i for i in self.total_words if i not in list_true] 
                     if i not in list_sol])
         return (TP,FP,FN,TN)
 
@@ -93,7 +93,7 @@ class Validation(Model.Model):
         return df
         
     def compare_sol_true(self,test,true):
-        input_tuple=self.compare_2_lists(test,true,self.get_total_words(self.train_df))
+        input_tuple=self.compare_2_lists(test,true)
         return input_tuple
 
     def get_solution(self,bow,model):
@@ -168,8 +168,8 @@ class Validation(Model.Model):
             dictionary,corpus=Model.Model().get_dict_corpus(EC_list_train)
             model=Model.Model().MyLDA(corpus=corpus,
                                      dictionary=dictionary,
-                                     num_topics=150,
-                                     random_state=np.random.randint(1),
+                                     num_topics=100,
+                                     random_state=200,
                                      passes=100
                                     )
             tuple_of_lists=self.solution_for_one_df(test_df,dictionary,model)
@@ -189,10 +189,10 @@ class Validation(Model.Model):
         return np.sqrt(0.5*(entropy(p,m) + entropy(q,m)))
 
     def get_similarity(self,query,matrix):
-        sims = jensen_shannon(query,matrix) # list of jensen shannon distances
+        sims = self.jensen_shannon(query,matrix) # list of jensen shannon distances
         return sims # the top k positional index of the smallest Jensen Shannon distances
 
-    def topic_array_from_train_df(self,df,model):
+    def topic_array_from_train_df(self,df,model,dictionary):
         train_pathway_dict={}
         for i in range(0,len(df)):
             bow = dictionary.doc2bow(df.iloc[i,2])
@@ -202,7 +202,7 @@ class Validation(Model.Model):
             train_pathway_dict[pathway]=compare_doc
         return train_pathway_dict
 
-    def topic_array_for_test_df(self,df,model):
+    def topic_array_from_test_df(self,df,model,dictionary):
         test_pathway_dict={}
         for i in range(0,len(df)):
             bow = dictionary.doc2bow(df.iloc[i,2])
@@ -212,9 +212,9 @@ class Validation(Model.Model):
             test_pathway_dict[pathway]=test_doc
         return test_pathway_dict
 
-    def compare_test_train_docs(self,df,model):
-        test_dict=self.topic_array_from_test_df(df,model)
-        train_dict=self.topic_array_for_train_df(df,model)
+    def compare_test_train_docs(self,df_test,df_train,model,dictionary):
+        test_dict=self.topic_array_from_test_df(df_test,model,dictionary)
+        train_dict=self.topic_array_from_train_df(df_train,model,dictionary)
         cols = ['Pathway_test', 'Pathway_train', 'JSD']
         lst=[];
         for pathway_test,test_doc in test_dict.items():
