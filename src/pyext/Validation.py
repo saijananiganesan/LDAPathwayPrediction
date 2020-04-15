@@ -236,6 +236,7 @@ class Validation(Model.Model):
             labels = [item.get_text() for item in ax0.get_xticklabels()]
             labels = x_axis
             ax0.set_xticklabels(labels,rotation=90,ha='right', minor=False)
+            ax0.set_yticklabels([],rotation=90,ha='right', minor=False)
             ax0.set_title(title)
             plt.colorbar(c, ax=ax0)
             plt.show()
@@ -254,6 +255,7 @@ class Validation(Model.Model):
             labels = [item.get_text() for item in ax0.get_xticklabels()]
             labels = x_axis
             ax0.set_xticklabels(labels,rotation=90,ha='right', minor=False)
+            ax0.set_yticklabels([],rotation=90,ha='right', minor=False)
             ax0.set_title(title)
             plt.colorbar(c, ax=ax0)
             plt.show()
