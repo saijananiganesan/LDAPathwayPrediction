@@ -9,7 +9,6 @@ templateEnv = jinja2.Environment(loader=templateLoader)
 template_html = "template.html"
 Template_Dict={}
 
-
 def add(num1,num2):
     num3=float(num1)+float(num2)
     return num3
@@ -17,9 +16,9 @@ def add(num1,num2):
 def write_html(Template_Dict, template_file):
     template = templateEnv.get_template(template_file)
     outputText=template.render(Template_Dict)
-    with open(os.path.join(os.path.join(dirName,get_output_file_html(mmcif_file))),"w") as fh:
+    with open(os.path.join(os.path.join(dirName,template_file),"w") as fh:
         fh.write(outputText)
-
+        
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -32,7 +31,6 @@ def dated_url_for(endpoint, **values):
                                  endpoint, filename)
             values['q'] = int(os.stat(file_path).st_mtime)
     return url_for(endpoint, **values)
-
 
 @app.route("/")
 def home():
@@ -54,8 +52,6 @@ def form_example():
                   Second Num: <input type="float" name="num2"><br>
                   <input type="submit" value="Submit"><br>
               </form>'''
-
-
 
 if __name__ == "__main__":
     app.run(debug=True)
