@@ -16,7 +16,7 @@ def add(num1,num2):
 def write_html(Template_Dict, template_file):
     template = templateEnv.get_template(template_file)
     outputText=template.render(Template_Dict)
-    with open(os.path.join(os.path.join(dirName,template_file),"w") as fh:
+    with open(os.path.join(dirName,template_file),"w") as fh:
         fh.write(outputText)
         
 @app.context_processor
