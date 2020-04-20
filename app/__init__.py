@@ -4,20 +4,6 @@ import os
 
 app = Flask(__name__)
 
-templateLoader = jinja2.FileSystemLoader(searchpath="./")
-templateEnv = jinja2.Environment(loader=templateLoader)
-template_html = "template.html"
-Template_Dict={}
-
-def add(num1,num2):
-    num3=float(num1)+float(num2)
-    return num3
-
-def write_html(Template_Dict, template_file):
-    template = templateEnv.get_template(template_file)
-    outputText=template.render(Template_Dict)
-    with open(os.path.join(dirName,template_file),"w") as fh:
-        fh.write(outputText)
         
 @app.context_processor
 def override_url_for():
@@ -39,6 +25,19 @@ def home():
 @app.route("/application/")
 def application():
     return render_template("application.html")
+
+@app.route("/LDA1/")
+def LDA1():
+    return render_template("LDA1.html")
+
+@app.route("/LDA2/")
+def LDA2():
+    return render_template("LDA2.html")
+
+@app.route("/FastText/")
+def FastText():
+    return render_template("FastText.html")
+
 
 @app.route('/form/', methods=['GET', 'POST'])
 def form():

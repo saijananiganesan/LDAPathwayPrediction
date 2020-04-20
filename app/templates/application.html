@@ -1,53 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <meta charset="utf-8">
-    <title>Flask Parent Template</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/templateX.css') }}">
-
-  </head>
-  <body>
-    <header>
-      <div class="container-fluid">
-        <h1 class="logo" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">Identify similar metabolic pathways and enzyme clusters using latent Dirichlet allocation (LDA)</h1>
-	</div>
-	</header>
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <title>Flask Parent Template</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/templateX.css') }}">
+   </head>
+   <body>
+      <header>
+         <div class="container-fluid">
+            <h1 class="logo" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">Identify similar metabolic pathways and enzyme clusters using latent Dirichlet allocation (LDA)</h1>
+         </div>
+      </header>
       <div class="container">
-  <div class="card border" style="border-color: solid black; margin-top:20px">
-    <div class="card-body" style="background-color: white; height: 60rem;">
-      <h3 class="font-weight-light">About</h3>
-      <p class="lead">This application is limited to identifying co-occurring enzyme clusters in prokaryotes. Metabolic network data mined from <a href='https://www.genome.jp/kegg/'>KEGG database</a> is used as a <i>document</i>, enzyme classification numbers are used as <i>words</i> to identify hidden co-occurring enzyme clusters (CEC) as <i>topics</i>. For details on the method, refer the <a href="https://github.com/saijananiganesan/LDAPathwayPrediction">code repository </a></p>
-      <h3 class="font-weight-light">Usage</h3>
-      <p class="lead">There are three options to use this application: </p>
-      <ol type='1'>
-	      <li class="lead">Identify topics (or CEC) given a list of enzyme classification numbers. </li>
-              <li class="lead">Identify similar pathways using LDA given a list of enzyme classification numbers. </li>
-              <li class="lead">Identify similar pathways using FastText algorithm given a list of enzyme classification numbers. </li>	
-      </ol>
-      <h3 class="font-weight-light">Choosing the right application of interest</h3>
-      <ol type='1'>
-	      <li class="lead"><b>LDA</b>: To be chosen if the requirement is to (a) get topics (or CEC) given a list of enzymes and (b) probabilities associated with outcomes. </li>
-                    <li class="lead"><b>FastText</b>: To be chosen if the input list contains enzymes that do not frequently occur in prokaryotes. </li>
-      </ol>
-      <p class="lead"><b><i>Note: </i></b>FastText works by considering similarity between words (or characters). For example, EC.1.2.3.4 will be characterized as similar to EC.1.2.3.98 by the algorithm even if EC.1.2.3.4 was never observed during training. Whereas LDA will simply assign a zero probability to enzymes that the model has never seen before. </p>
-       <div class="container">
-  <div class="card border" style="border-color: solid black; margin-top:20px">
-    <div class="card-body" style="background-color: white; height: 7rem;">
-
-	    <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('form') }}><h2>CEC clusters</h2></a>
-            <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('home') }}><h2>Similar metabolic networks using LDA</h2></a>
-            <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('form') }}><h2>Similar metabolic networks using FastText</h2></a>
-
-    </div></div></div>
-
-    </div>
-  </div>
-</div>
-
-
-  </body>
+         <div class="card border" style="border-color: solid black; margin-top:20px">
+            <div class="card-body" style="background-color: white; height: 60rem;">
+               <h3 class="font-weight-light">About</h3>
+               <p class="lead">This application is limited to identifying co-occurring enzyme clusters in prokaryotes. Metabolic network data mined from <a href='https://www.genome.jp/kegg/'>KEGG database</a> is used as a <i>document</i>, enzyme classification numbers are used as <i>words</i> to identify hidden co-occurring enzyme clusters (CEC) as <i>topics</i>. For details on the method, refer the <a href="https://github.com/saijananiganesan/LDAPathwayPrediction">code repository </a></p>
+               <h3 class="font-weight-light">Usage</h3>
+               <p class="lead">There are three options to use this application: </p>
+               <ol type='1'>
+                  <li class="lead">Identify topics (or CEC) given a list of enzyme classification numbers. </li>
+                  <li class="lead">Identify similar pathways using LDA given a list of enzyme classification numbers. </li>
+                  <li class="lead">Identify similar pathways using FastText algorithm given a list of enzyme classification numbers. </li>
+               </ol>
+               <h3 class="font-weight-light">Choosing the right application of interest</h3>
+               <ol type='1'>
+                  <li class="lead"><b>LDA</b>: To be chosen if the requirement is to (a) get topics (or CEC) given a list of enzymes and (b) probabilities associated with outcomes. </li>
+                  <li class="lead"><b>FastText</b>: To be chosen if the input list contains enzymes that do not frequently occur in prokaryotes. </li>
+               </ol>
+               <p class="lead"><b><i>Note: </i></b>FastText works by considering similarity between words (or characters). For example, EC.1.2.3.4 will be characterized as similar to EC.1.2.3.98 by the algorithm even if EC.1.2.3.4 was never observed during training. Whereas LDA will simply assign a zero probability to enzymes that the model has never seen before. </p>
+               <div class="container">
+                  <div class="card border" style="border-color: solid black; margin-top:20px">
+                     <div class="card-body" style="background-color: white; height: 7rem;">
+                        <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('LDA1') }}>
+                        <h2>CEC clusters</h2>
+                        </a>
+                        <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('LDA2') }}>
+                        <h2>Similar metabolic networks using LDA</h2>
+                        </a>
+                        <a type="button" class="btn btn-primary btn-lg btn-block" href={{ url_for('FastText') }}>
+                        <h2>Similar metabolic networks using FastText</h2>
+                        </a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
 </html>
