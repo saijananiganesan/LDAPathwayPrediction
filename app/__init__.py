@@ -1,9 +1,25 @@
 from flask import Flask, flash, render_template, request, url_for, redirect
 import jinja2
-import os
+import os,sys
+sys.path.insert(1, "/Users/saijananiganesan/Desktop/ML/LDA/LDAPathwayPrediction/src/pyext/")
+from Model import Model
+from Validation import Validation
+import matplotlib.pyplot as plt
+import pandas as pd
+pd.set_option('mode.chained_assignment', None)
+import numpy as np
+
+templateLoader = jinja2.FileSystemLoader(searchpath="./")
+templateEnv = jinja2.Environment(loader=templateLoader)
+
+def write_html(Template_Dict, template_file):
+    template = templateEnv.get_template(template_file)
+    outputText=template.render(Template_Dict)
+    with open(os.path.join(dirName,output_file),"w") as fh:
+        fh.write(outputText)
+
 
 app = Flask(__name__)
-
         
 @app.context_processor
 def override_url_for():
@@ -26,16 +42,50 @@ def home():
 def application():
     return render_template("application.html")
 
-@app.route("/LDA1/")
+@app.route("/LDA1Result/")
+def LDA1Result():
+    return render_template("LDA1Result.html")
+
+@app.route("/LDA2Result/")
+def LDA2Result():
+    return render_template("LDA2Result.html")
+
+@app.route("/FTResult/")
+def FTResult():
+    return render_template("FTResult.html")
+
+
+@app.route("/LDA1/", methods=['GET','POST'])
 def LDA1():
+    if request.method=='POST':
+        enzyme_string=request.form['Enzyme']
+        if enzyme_string:
+            return redirect(url_for('LDA1Result'))
+        else:
+            return "<h1>Please enter enzyme list to proceed.</h1>"
+
     return render_template("LDA1.html")
 
-@app.route("/LDA2/")
+@app.route("/LDA2/", methods=['GET','POST'])
 def LDA2():
+    if request.method=='POST':
+        enzyme_string=request.form['link']
+        if enzyme_string:
+            return redirect(url_for('LDA2Result'))
+        else:
+            return "<h1>Please enter enzyme list to proceed.</h1>"
+
     return render_template("LDA2.html")
 
-@app.route("/FastText/")
+@app.route("/FastText/", methods=['GET','POST'])
 def FastText():
+    if request.method=='POST':
+        enzyme_string=request.form['link']
+        if enzyme_string:
+            return redirect(url_for('FTResult'))
+        else:
+            return "<h1>Please enter enzyme list to proceed.</h1>"
+
     return render_template("FastText.html")
 
 
@@ -51,19 +101,6 @@ def form():
 
     return render_template('form.html')
 
-
-@app.route('/form-example', methods=['GET', 'POST']) #allow both GET and POST requests
-def form_example():
-    if request.method == 'POST':  #this block is only entered when the form is submitted
-        num1 = request.form.get('num1')
-        num2 = request.form['num2']
-        num3=add(num1,num2)
-        return render_template("template2.html",num1=num1,num2=num2,num3=num3)
-    return '''<form method="POST">
-                  FIRST Num: <input type="float" name="num1"><br>
-                  Second Num: <input type="float" name="num2"><br>
-                  <input type="submit" value="Submit"><br>
-              </form>'''
 
 if __name__ == "__main__":
     app.run(debug=True)

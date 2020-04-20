@@ -16,15 +16,8 @@
       <div class="container">
          <div class="card border" style="border-color: solid black; margin-top:20px">
             <div class="card-body" style="background-color: white; height: 60rem;">
-               <h3 class="font-weight-light" align='center'>CEC clusters: LDA</h3>
-               <form action=""  method="POST">
-                  <div class="form-group">
-                     <label for="exampleInputName1">Enter list of enzymes</label>
-                     <input type="text" class="form-control" id="exampleInputName1" placeholder="Enzyme" name="Enzyme" value="{{request.form.Enzyme}}">
-                     <small id="Help" class="form-text text-muted">The enzyme list should be comma separated, eg: ec:1.2.3.4,ec:2.3.4.44,ec:3.1.23.1 </small>
-                  </div>
-                  <input type="submit" class="btn btn-primary" value="Get topics">
-               </form>
+               <h3 class="font-weight-light">Result</h3>
+	       <p class="lead">{{result}} </p>
             </div>
          </div>
       </div>
