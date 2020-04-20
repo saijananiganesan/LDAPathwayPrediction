@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,url_for
+from flask import Flask, flash, render_template, request, url_for, redirect
 import jinja2
 import os
 
@@ -36,9 +36,22 @@ def dated_url_for(endpoint, **values):
 def home():
     return render_template("home.html")
 
-@app.route("/about")
-def about():
-    return render_template("about.html")
+@app.route("/application/")
+def application():
+    return render_template("application.html")
+
+@app.route('/form/', methods=['GET', 'POST'])
+def form():
+    if request.method == 'POST':
+        name=request.form['Name']
+        email=request.form['Email']
+        if name and email:
+            return redirect(url_for('application'))
+        else:
+            return "<h1>Please fill your details to proceed.</h1>"
+
+    return render_template('form.html')
+
 
 @app.route('/form-example', methods=['GET', 'POST']) #allow both GET and POST requests
 def form_example():
