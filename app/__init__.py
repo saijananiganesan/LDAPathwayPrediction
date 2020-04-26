@@ -1,13 +1,15 @@
 from flask import Flask, flash, render_template, request, url_for, redirect
 import jinja2
 import os,sys
-sys.path.insert(1, "/Users/saijananiganesan/Desktop/ML/LDA/LDAPathwayPrediction/src/pyext/")
+sys.path.append('../src/pyext/')
 from Model import Model
 from Validation import Validation
 import matplotlib.pyplot as plt
 import pandas as pd
 pd.set_option('mode.chained_assignment', None)
 import numpy as np
+import sqlite3 as sql
+from dbconnect import create_users_table,create_login_table
 
 templateLoader = jinja2.FileSystemLoader(searchpath="./")
 templateEnv = jinja2.Environment(loader=templateLoader)
@@ -95,6 +97,14 @@ def form():
         name=request.form['Name']
         email=request.form['Email']
         if name and email:
+            date,c, conn = create_users_table()
+            entry_exists=c.execute("SELECT EXISTS (SELECT 1 FROM users WHERE login=?) AND (SELECT 1 FROM users WHERE email=?)",(name,email)).fetchall()[0][0]
+            if entry_exists==0:
+                c.execute('INSERT INTO users (date, login, email) VALUES (?,?,?)',(date, name, email))
+                conn.commit()
+            date,c1, conn1 = create_login_table()
+            c1.execute('INSERT INTO login (date, login, email) VALUES (?,?,?)',(date, name, email))
+            conn1.commit()
             return redirect(url_for('application'))
         else:
             return "<h1>Please fill your details to proceed.</h1>"
