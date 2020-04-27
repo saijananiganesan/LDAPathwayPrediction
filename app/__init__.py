@@ -10,14 +10,17 @@ pd.set_option('mode.chained_assignment', None)
 import numpy as np
 import sqlite3 as sql
 from dbconnect import create_users_table,create_login_table
+import gensim
+import pickle
+from results_LDA import test_sample
 
 templateLoader = jinja2.FileSystemLoader(searchpath="./")
 templateEnv = jinja2.Environment(loader=templateLoader)
 
-def write_html(Template_Dict, template_file):
-    template = templateEnv.get_template(template_file)
+def write_html(Template_Dict, template_file,output_file):
+    template = templateEnv.get_template('templates/'+template_file)
     outputText=template.render(Template_Dict)
-    with open(os.path.join(dirName,output_file),"w") as fh:
+    with open(os.path.join('templates/',output_file),"w") as fh:
         fh.write(outputText)
 
 
@@ -56,22 +59,36 @@ def LDA2Result():
 def FTResult():
     return render_template("FTResult.html")
 
+@app.route("/Result/")
+def Result():
+    return render_template("CheckResults.html")
 
-@app.route("/LDA1/", methods=['GET','POST'])
-def LDA1():
+
+@app.route("/Check/", methods=['GET','POST'])
+def Check():
     if request.method=='POST':
-        enzyme_string=request.form['Enzyme']
+        enzyme_string=request.form['list']
         if enzyme_string:
-            return redirect(url_for('LDA1Result'))
+            num,text1=test_sample().Check_format(enzyme_string)
+            if num==1:
+                return "<h1>{}</h1>".format(text1)
+            if num==0:
+                result=test_sample().Check_In_DB(enzyme_string)
+                Template_Dict={}
+                Template_Dict['result']=result
+                write_html(Template_Dict,"CheckResult_temp.html","CheckResults.html")
+                return redirect(url_for('Result'))
+            else:
+                return "<h1>Please enter valid enzyme list to proceed.</h1>"
         else:
             return "<h1>Please enter enzyme list to proceed.</h1>"
+    return render_template("Check.html")
 
-    return render_template("LDA1.html")
 
 @app.route("/LDA2/", methods=['GET','POST'])
 def LDA2():
     if request.method=='POST':
-        enzyme_string=request.form['link']
+        enzyme_string=request.form['list']
         if enzyme_string:
             return redirect(url_for('LDA2Result'))
         else:
@@ -82,7 +99,8 @@ def LDA2():
 @app.route("/FastText/", methods=['GET','POST'])
 def FastText():
     if request.method=='POST':
-        enzyme_string=request.form['link']
+        enzyme_string=request.form['list']
+        print (enzyme_string,type(enzyme_string))
         if enzyme_string:
             return redirect(url_for('FTResult'))
         else:
