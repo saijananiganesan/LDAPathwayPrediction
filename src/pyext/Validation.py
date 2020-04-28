@@ -20,7 +20,7 @@ class Validation(Model.Model):
         self.df=Model.Model().df_pkl
         self.EC_train,self.EC_test,self.train_df,self.test_df=Model.Model().get_train_and_test(Model.Model().df_pkl)
         self.dictionary,self.corpus=Model.Model().get_dict_corpus(self.EC_train)
-        self.model=gensim.models.ldamodel.LdaModel.load('models/lda_train_150topics_100passes.model')
+        #self.model=gensim.models.ldamodel.LdaModel.load('models/lda_train_150topics_100passes.model')
         self.path='images/'
         self.total_words=list(set([j for i in self.EC_train for j in i]))
 
@@ -215,7 +215,7 @@ class Validation(Model.Model):
     def compare_test_train_docs(self,df_test,df_train,model,dictionary):
         test_dict=self.topic_array_from_test_df(df_test,model,dictionary)
         train_dict=self.topic_array_from_train_df(df_train,model,dictionary)
-        cols = ['Pathway_test', 'Pathway_train', 'JSD']
+        cols = ['Pathway_test', 'Pathway_train', 'Similarity']
         lst=[];
         for pathway_test,test_doc in test_dict.items():
             for pathway_train,train_doc in train_dict.items():
@@ -226,8 +226,8 @@ class Validation(Model.Model):
 
     def print_heat_map_for_one(self,dist_df,test_df):
         for i in range(0,len(test_df)):
-            df_sorted=dist_df.loc[dist_df['Pathway_test'] == test_df['Name'].to_list()[i]].sort_values(by=['JSD']).head()
-            Z=[df_sorted['JSD'].to_list()]
+            df_sorted=dist_df.loc[dist_df['Pathway_test'] == test_df['Name'].to_list()[i]].sort_values(by=['Similarity']).head()
+            Z=[df_sorted['Similarity'].to_list()]
             title=test_df['Name'].to_list()[i]
             x_axis=df_sorted['Pathway_train'].to_list()
             plt.figure(figsize=(12,2))

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <title>Flask Parent Template</title>
+      {% raw %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/templateX.css') }}">      
+      {% endraw %}
+   </head>
+               <!-- scripts -->
+            <script>
+                function Write_Table(list_to_write){
+                var mytable = "<div class='bs-example' class='text-center'> <table class='table table-bordered' style='border-color':#003366;> <thead> <tr>";
+                for (var i = 0; i < list_to_write[0].length; i++) {
+                mytable += "<th align='center' class='text-center'>" + list_to_write[0][i] + "</th>";
+                }
+                mytable += "</tr></thead><tr>";
+                
+                for (var j=1;j<list_to_write.length;j++) {
+                for (var i=0; i<list_to_write[j].length; i++) {
+                mytable += "<td><div>" + list_to_write[j][i] + "</div></td>";
+                }
+                mytable += "</tr><tr>";
+                
+                }
+                mytable += "</tr></table></div>";
+                document.write(mytable);
+                }
+            </script>
+            <!-- scripts -->
+
+   <body>
+      <header>
+         <div class="container-fluid">
+                        {% raw %}
+
+                  <h1 class="logo" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;"><a  href={{ url_for('application') }}> Identify similar metabolic pathways and enzyme clusters using latent Dirichlet allocation (LDA) </a></h1>
+      {% endraw %}
+         
+        
+	 </div>
+      </header>
+      <div class="container">
+         <div class="card border" style="border-color: solid black; margin-top:20px">
+            <div class="card-body" style="background-color: white; height: 60rem;">
+               <h3 class="font-weight-light">Result</h3>
+	       <p class="lead">The results of LDA analysis are as follows:</p>
+	       <p class="lead">Note: Similarity values greater than 0.5 are unrealiable. A similarity value of 0 indicates perfect match, read <a href='https://www.cise.ufl.edu/~anand/sp06/jensen-shannon.pdf'>about Jensen-Shannon distance metric for more information.</a></p>
+            <script type="text/javascript">
+            var input_list={{results_table}};    
+            Write_Table(list_to_write=input_list)
+            </script>
+            </div>
+         </div>
+      </div>
+   </body>
+<footer>
+<div class="container-fluid">
+  <p class="logo1" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">&copy; Copyright 2020, Sai J. Ganesan (ganesans@salilab.org)</p>
+        </div>
+</footer>
+</html>

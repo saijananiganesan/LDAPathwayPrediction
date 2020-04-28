@@ -61,15 +61,25 @@ class Model(object):
         ldamodel=gensim.models.ldamodel.LdaModel(corpus, num_topics=num_topics, 
                                       random_state=random_state,
                                       id2word = dictionary, passes=passes)
-        ldamodel.save('models/lda_train_150topics_100passes.model')
+        #ldamodel.save('models/lda_train_150topics_100passes.model')
+        return ldamodel
+
+    def MyLDAP(self,corpus,dictionary,num_topics,alpha,eta,random_state,passes):
+        ldamodel=gensim.models.ldamodel.LdaModel(corpus, num_topics=num_topics,
+                                      random_state=random_state,
+                                      id2word = dictionary, 
+                                      alpha=alpha,
+                                      eta=eta,
+                                      passes=passes)
         return ldamodel
     
+
     def model_perplexity(self,model,corpus):
         perplexity=model.log_perplexity(corpus)
         return perplexity
 
-    def model_coherence(self,model,EC_train,dictionary):
-        coherence_model_lda = CoherenceModel(model=ldamodel, texts=EC_train, dictionary=dictionary, coherence='c_v')
+    def model_coherence(self,model,texts,dictionary):
+        coherence_model_lda = CoherenceModel(model=model, texts=texts, dictionary=dictionary, coherence='c_v')
         coherence_lda = coherence_model_lda.get_coherence()
         return coherence_lda
 

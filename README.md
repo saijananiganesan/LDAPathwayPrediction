@@ -14,6 +14,10 @@
 
 - `EDA`      contains an explaratory data analysis script
 
+- `app`      contains flask support
+
+- `test`     contains unit tests
+
 ## List of classes:
 
 - `KEGGData`  class to fetch data from KEGG database
@@ -26,9 +30,11 @@
 
 - `Parameterization` class to parameterize LDA model;inherits from Model class 
 
+- `TestSample`  class to process input data for FT and LDA models
+
 ## Running simulations 
 
-- `Play.ipynb` demo script on loading data, model building and validation
+- `LDAvsFastText_Model.ipynb` demo script on loading data, model, and testing
 
 ## Information
 

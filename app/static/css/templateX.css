@@ -10,6 +10,13 @@ body {
   color: white;
 }
 
+.logo1 {
+  background-color: #0D122B;
+  padding: 5px;
+  color: white;
+}
+
+
 html,h1,h2,h3,h4,h5,h6,a{
         font-family: "Arial";
 }

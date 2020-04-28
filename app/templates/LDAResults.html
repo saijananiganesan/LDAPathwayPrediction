@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="utf-8">
+      <title>Flask Parent Template</title>
+      
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/templateX.css') }}">      
+      
+   </head>
+               <!-- scripts -->
+            <script>
+                function Write_Table(list_to_write){
+                var mytable = "<div class='bs-example' class='text-center'> <table class='table table-bordered' style='border-color':#003366;> <thead> <tr>";
+                for (var i = 0; i < list_to_write[0].length; i++) {
+                mytable += "<th align='center' class='text-center'>" + list_to_write[0][i] + "</th>";
+                }
+                mytable += "</tr></thead><tr>";
+                
+                for (var j=1;j<list_to_write.length;j++) {
+                for (var i=0; i<list_to_write[j].length; i++) {
+                mytable += "<td><div>" + list_to_write[j][i] + "</div></td>";
+                }
+                mytable += "</tr><tr>";
+                
+                }
+                mytable += "</tr></table></div>";
+                document.write(mytable);
+                }
+            </script>
+            <!-- scripts -->
+
+   <body>
+      <header>
+         <div class="container-fluid">
+                        
+
+                  <h1 class="logo" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;"><a  href={{ url_for('home') }}> Identify similar metabolic pathways and enzyme clusters using latent Dirichlet allocation (LDA) </a></h1>
+      
+         
+        
+	 </div>
+      </header>
+      <div class="container">
+         <div class="card border" style="border-color: solid black; margin-top:20px">
+            <div class="card-body" style="background-color: white; height: 60rem;">
+               <h3 class="font-weight-light">Result</h3>
+	       <p class="lead">The results of LDA analysis are as follows:</p>
+	       <p class="lead">Note: Similarity values greater than 0.5 are unrealiable. A similarity value of 0 indicates perfect match, read <a href='https://www.cise.ufl.edu/~anand/sp06/jensen-shannon.pdf'>about Jensen-Shannon distance metric for more information.</a></p>
+            <script type="text/javascript">
+            var input_list=[['Rank', 'Network name', 'Network ID', 'Similarity score'], ['1', '<a href = https://www.genome.jp/kegg/pathway/map/map00630.html > Glyoxylate and dicarboxylate metabolism</a>', 'map00630', '0.43660375475883484'], ['2', '<a href = https://www.genome.jp/kegg/pathway/map/map00785.html > Lipoic acid metabolism</a>', 'map00785', '0.44850799441337585'], ['3', '<a href = https://www.genome.jp/kegg/pathway/map/map00571.html > Lipoarabinomannan (LAM) biosynthesis</a>', 'map00571', '0.44850799441337585'], ['4', '<a href = https://www.genome.jp/kegg/pathway/map/map00572.html > Arabinogalactan biosynthesis - Mycobacterium</a>', 'map00572', '0.44850799441337585'], ['5', '<a href = https://www.genome.jp/kegg/pathway/map/map00515.html > Mannose type O-glycan biosynthesis</a>', 'map00515', '0.5754253268241882'], ['6', '<a href = https://www.genome.jp/kegg/pathway/map/map00514.html > Other types of O-glycan biosynthesis</a>', 'map00514', '0.6264665722846985'], ['7', '<a href = https://www.genome.jp/kegg/pathway/map/map01100.html > Metabolic pathways</a>', 'map01100', '0.6320627927780151'], ['8', '<a href = https://www.genome.jp/kegg/pathway/map/map00073.html > Cutin, suberine and wax biosynthesis</a>', 'map00073', '0.6593267321586609'], ['9', '<a href = https://www.genome.jp/kegg/pathway/map/map00473.html > D-Alanine metabolism</a>', 'map00473', '0.6593278646469116'], ['10', '<a href = https://www.genome.jp/kegg/pathway/map/map01051.html > Biosynthesis of ansamycins</a>', 'map01051', '0.6815156936645508']];    
+            Write_Table(list_to_write=input_list)
+            </script>
+            </div>
+         </div>
+      </div>
+   </body>
+<footer>
+<div class="container-fluid">
+  <p class="logo1" align='center' class='text-center' style="border: none; margin-bottom: 0px; margin-right: 0px; margin-left: 0px;">&copy; Copyright 2020, Sai J. Ganesan (ganesans@salilab.org)</p>
+        </div>
+</footer>
+</html>

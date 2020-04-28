@@ -1,0 +1,13 @@
+pandas
+numpy
+flask
+pickle-mixin
+gensim
+fasttext
+matplotlib
+scipy
+sklearn
+Werkzeug
+jinja2
+seaborn
+gunicorn==19.9.0
