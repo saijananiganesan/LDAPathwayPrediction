@@ -36,6 +36,10 @@
 
 - `LDAvsFastText_Model.ipynb` demo script on loading data, model, and testing
 
+## Running application
+
+[Flask based web application for identifying similar pathways](http://similarnetworks.wn.r.appspot.com/)
+
 ## Information
 
 _Author(s)_: Sai J. Ganesan
