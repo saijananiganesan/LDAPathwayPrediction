@@ -10,4 +10,4 @@ sklearn
 Werkzeug
 jinja2
 seaborn
-gunicorn==22.0.0
+gunicorn==23.0.0
